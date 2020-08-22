@@ -15,10 +15,11 @@ for i in tqdm_notebook(frames):
 	img = cv2.imread('frames/+i')
 	images.append(img)
 
-'''
+
 # specify frame index
 idx = 457
 
+'''
 # plot frame
 plt.figure(figsize=(10,10))
 plt.imshow(images[idx][:,:,0], cmap='gray')
