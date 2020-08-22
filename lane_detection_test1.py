@@ -57,19 +57,8 @@ if __name__ == "__main__":
 
 
 	## Hough Space
-	lines = cv2.HoughLines(canny_edges, 1, np.pi/180, 100)
-	for line in lines:
-		rho, theta = line[0]
-		cos_t = np.cos(theta)
-		sin_t = np.sin(theta)
-		x0 = cos_t * rho
-		y0 = sin_t * rho
-
-		a = 1000
-		x1 = int(x0 + a*(-sin_t))
-		y1 = int(y0 + a*(cos_t))
-		x2 = int(x0 - a*(-sin_t))
-		y2 = int(y0 - a*(cos_t))
+	# use cv2.HoughLinesP
+	
 
 		cv2.line(img, (x1, y1), (x2, y2), (0,0,255), 2)
 
