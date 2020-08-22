@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
 	## Hough Space
 	# use cv2.HoughLinesP
-	lines = cv2.HoughLinesP(canny_edges, 0.8, np.pi/180, 90, minLineLength=10, maxLineGap=100)
+	lines = cv2.HoughLinesP(canny_edges, 1, np.pi/180, 90, minLineLength=10, maxLineGap=100)
 
 	for line in lines:
 		x1 = line[0][0]
