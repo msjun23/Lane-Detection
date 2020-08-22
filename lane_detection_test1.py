@@ -5,10 +5,10 @@ import numpy as np
 if __name__ == "__main__":
 	## get image
 	img = cv2.imread("images/road2.jpg")
-	cv2.imshow("img", img)
+	#cv2.imshow("img", img)
 
 	gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-	cv2.imshow("gray_img", gray_img)
+	#cv2.imshow("gray_img", gray_img)
 
 
 	## rgb -> hsv
@@ -22,8 +22,8 @@ if __name__ == "__main__":
 	mask_white = cv2.inRange(gray_img, 200, 255)
 	mask_y_w = cv2.bitwise_or(mask_yellow, mask_white)
 	mask_y_w_img = cv2.bitwise_and(gray_img, mask_y_w)
-	cv2.imshow("mask_y_w", mask_y_w)
-	cv2.imshow("mask_y_w_img", mask_y_w_img)
+	#cv2.imshow("mask_y_w", mask_y_w)
+	#cv2.imshow("mask_y_w_img", mask_y_w_img)
 
 
 	## set ROI-Region Of Interest
@@ -40,13 +40,13 @@ if __name__ == "__main__":
 	cv2.fillPoly(mask, vertices, ignore_color)
 
 	roi_img = cv2.bitwise_and(mask_y_w_img, mask)
-	cv2.imshow("roi_img", roi_img)
+	#cv2.imshow("roi_img", roi_img)
 
 
 	## apply Gaussian blur to suppress noise in Canny Edge Detection
 	kernel_size = (5,5)
 	gaussian_img = cv2.GaussianBlur(roi_img, kernel_size, 0)
-	cv2.imshow("gaussian_img", gaussian_img)
+	#cv2.imshow("gaussian_img", gaussian_img)
 
 
 	## Canny Edge Detection
