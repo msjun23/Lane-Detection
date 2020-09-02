@@ -11,8 +11,9 @@ if __name__ == "__main__":
 			cap.open(fname)
 
 		ret, frame = cap.read()
-		processed_frame = ImagePreprocessing.ImagePreprocessing(frame)
+		processed_frame, bird_eye_view = ImagePreprocessing.ImagePreprocessing(frame)
 		cv2.imshow("VideoFrame", processed_frame)
+		cv2.imshow("bird_eye_view", bird_eye_view)
 
 		if cv2.waitKey(30) > 0:
 			break

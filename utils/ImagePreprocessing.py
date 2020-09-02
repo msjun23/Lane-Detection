@@ -6,7 +6,8 @@ def ImagePreprocessing(img):
 	mask_y_w_img = MaskImage(img)
 
 	## set ROI-Region Of Interest
-	roi_img = SetROI(mask_y_w_img)
+	## perspective transform
+	roi_img, bird_eye_view = SetROI(mask_y_w_img)
 
 	## Canny Edge Detection
 	canny_edges = GetCannyEdge(roi_img)
@@ -14,7 +15,7 @@ def ImagePreprocessing(img):
 	## Hough Transform
 	res = HoughTransform(canny_edges, img)
 
-	return res
+	return res, bird_eye_view
 	
 
 def MaskImage(img):
@@ -36,7 +37,7 @@ def MaskImage(img):
 
 def SetROI(img):
 	mask = np.zeros_like(img)
-	ignore_color = 255
+	ignore_color = (255,0,0)
 
 	imshape = img.shape
 	lower_left = [imshape[1]/9,imshape[0]]
@@ -44,11 +45,23 @@ def SetROI(img):
 	top_left = [imshape[1]/2-imshape[1]/8,imshape[0]/2+imshape[0]/10]
 	top_right = [imshape[1]/2+imshape[1]/8,imshape[0]/2+imshape[0]/10]
 	vertices = [np.array([lower_left,top_left,top_right,lower_right],dtype=np.int32)]
+	points = np.float32([lower_left,top_left,top_right,lower_right])
 
 	cv2.fillPoly(mask, vertices, ignore_color)
 
 	roi_img = cv2.bitwise_and(img, mask)
-	return roi_img
+	bird_eye_view = PerspectiveTransform(roi_img, points)
+	
+	return roi_img, bird_eye_view
+
+
+def PerspectiveTransform(img, points, size=(420,720)):
+	dst = np.float32([(20,720), (20,0), (400,0), (400,720)])
+	
+	M = cv2.getPerspectiveTransform(points, dst)
+	bird_eye_view = cv2.warpPerspective(img, M, size)
+
+	return bird_eye_view
 
 
 def GetCannyEdge(img):
