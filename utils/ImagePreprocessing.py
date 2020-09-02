@@ -7,7 +7,7 @@ def ImagePreprocessing(img):
 
 	## set ROI-Region Of Interest
 	## perspective transform
-	roi_img, bird_eye_view = SetROI(mask_y_w_img)
+	roi_img, birds_eye_view = SetROI(mask_y_w_img)
 
 	## Canny Edge Detection
 	canny_edges = GetCannyEdge(roi_img)
@@ -15,7 +15,7 @@ def ImagePreprocessing(img):
 	## Hough Transform
 	res = HoughTransform(canny_edges, img)
 
-	return res, bird_eye_view
+	return res, birds_eye_view
 	
 
 def MaskImage(img):
@@ -24,8 +24,8 @@ def MaskImage(img):
 	## rgb -> gray
 	gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-	lower_yellow = np.array([20,100,100], dtype="uint8")
-	upper_yellow = np.array([30,255,255], dtype="uint8")
+	lower_yellow = np.array([0,160,160], dtype="uint8")
+	upper_yellow = np.array([160,255,255], dtype="uint8")
 
 	mask_yellow = cv2.inRange(hsv_img, lower_yellow, upper_yellow)
 	mask_white = cv2.inRange(gray_img, 200, 255)
@@ -40,10 +40,10 @@ def SetROI(img):
 	ignore_color = (255,0,0)
 
 	imshape = img.shape
-	lower_left = [imshape[1]/9, imshape[0]]
-	lower_right = [imshape[1]-imshape[1]/9, imshape[0]]
-	top_left = [imshape[1]/2-imshape[1]/8, imshape[0]/2+imshape[0]/10]
-	top_right = [imshape[1]/2+imshape[1]/8, imshape[0]/2+imshape[0]/10]
+	lower_left = [imshape[1]/12, imshape[0]]
+	lower_right = [imshape[1]-imshape[1]/12, imshape[0]]
+	top_left = [imshape[1]/2-imshape[1]/20, imshape[0]/2+imshape[0]/10]
+	top_right = [imshape[1]/2+imshape[1]/20, imshape[0]/2+imshape[0]/10]
 	
 	## set ROI-Region Of Interest
 	vertices = [np.array([lower_left, top_left, top_right, lower_right], dtype=np.int32)]
@@ -52,24 +52,24 @@ def SetROI(img):
 
 	## perspective transform
 	points = np.float32([lower_left, top_left, top_right, lower_right])
-	bird_eye_view = PerspectiveTransform(roi_img, points)
+	birds_eye_view = PerspectiveTransform(roi_img, points)
 	
-	return roi_img, bird_eye_view
+	return roi_img, birds_eye_view
 
 
 def PerspectiveTransform(img, points, size=(640,480)):
 	dst_points = np.float32([(80,480), (80,0), (560,0), (560,480)])
 
 	M = cv2.getPerspectiveTransform(points, dst_points)
-	bird_eye_view = cv2.warpPerspective(img, M, size)
+	birds_eye_view = cv2.warpPerspective(img, M, size)
 
 	'''
 	## morphology
 	morph_kernel = np.ones((5,5), np.uint8)
-	bird_eye_view = cv2.morphologyEx(bird_eye_view, cv2.MORPH_OPEN, morph_kernel)
+	birds_eye_view = cv2.morphologyEx(birds_eye_view, cv2.MORPH_OPEN, morph_kernel)
 	'''
 
-	return bird_eye_view
+	return birds_eye_view
 
 
 def GetCannyEdge(img):
