@@ -40,26 +40,34 @@ def SetROI(img):
 	ignore_color = (255,0,0)
 
 	imshape = img.shape
-	lower_left = [imshape[1]/9,imshape[0]]
-	lower_right = [imshape[1]-imshape[1]/9,imshape[0]]
-	top_left = [imshape[1]/2-imshape[1]/8,imshape[0]/2+imshape[0]/10]
-	top_right = [imshape[1]/2+imshape[1]/8,imshape[0]/2+imshape[0]/10]
-	vertices = [np.array([lower_left,top_left,top_right,lower_right],dtype=np.int32)]
-	points = np.float32([lower_left,top_left,top_right,lower_right])
-
+	lower_left = [imshape[1]/9, imshape[0]]
+	lower_right = [imshape[1]-imshape[1]/9, imshape[0]]
+	top_left = [imshape[1]/2-imshape[1]/8, imshape[0]/2+imshape[0]/10]
+	top_right = [imshape[1]/2+imshape[1]/8, imshape[0]/2+imshape[0]/10]
+	
+	## set ROI-Region Of Interest
+	vertices = [np.array([lower_left, top_left, top_right, lower_right], dtype=np.int32)]
 	cv2.fillPoly(mask, vertices, ignore_color)
-
 	roi_img = cv2.bitwise_and(img, mask)
+
+	## perspective transform
+	points = np.float32([lower_left, top_left, top_right, lower_right])
 	bird_eye_view = PerspectiveTransform(roi_img, points)
 	
 	return roi_img, bird_eye_view
 
 
-def PerspectiveTransform(img, points, size=(420,720)):
-	dst = np.float32([(20,720), (20,0), (400,0), (400,720)])
-	
-	M = cv2.getPerspectiveTransform(points, dst)
+def PerspectiveTransform(img, points, size=(640,480)):
+	dst_points = np.float32([(80,480), (80,0), (560,0), (560,480)])
+
+	M = cv2.getPerspectiveTransform(points, dst_points)
 	bird_eye_view = cv2.warpPerspective(img, M, size)
+
+	'''
+	## morphology
+	morph_kernel = np.ones((5,5), np.uint8)
+	bird_eye_view = cv2.morphologyEx(bird_eye_view, cv2.MORPH_OPEN, morph_kernel)
+	'''
 
 	return bird_eye_view
 

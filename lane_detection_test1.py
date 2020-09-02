@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from utils import ImagePreprocessing as ImagePreprocessing
+from utils import ImagePreprocessing
 
 if __name__ == "__main__":
 	## get image
