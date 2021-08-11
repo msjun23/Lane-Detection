@@ -6,7 +6,7 @@ Let's start lane detection with OpenCV, Python
 This three files are checking about basic function of OpenCV
 
 - [canny_edge_detection.py](/canny_edge_detection.py)
-- [hough_line_detection](/hough_line_detection.py)
+- [hough_line_detection.py](/hough_line_detection.py)
 - [houghlinesp_test.py](/houghlinesp_test.py)
 
 ---
