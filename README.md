@@ -18,3 +18,23 @@ This three files are checking about basic function of OpenCV
     <br>[lane_detection_test2.py](/lane_detection_test2.py)
 
 These use [ImagePreprocessing.py](/utils/ImagePreprocessing.py).
+
+### <center> For more details about ImagePreprocessing will be updated soon. </center>
+
+---
+
+# CLAHE Update
+For better robust detection, applied ***CLAHE(Contrast Limited Adaptive Histogram Equalization)***
+
+1. Convert RGB image to LAB image
+2. Apply CLAHE to L channel image
+3. Remerge LAB channels and convert LAB to RGB again
+
+It returns more robust image about light.
+
+- Image example
+> ![yellow_white](/images/yellow_white.png)
+>
+> ![mask_yellow_white_without_clahe](/saved/clahe_test/mask_yellow_white_without_clahe.png)
+>
+> ![mask_yellow_white_with_clahe](/saved/clahe_test/mask_yellow_white_with_clahe.png)
