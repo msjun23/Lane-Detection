@@ -19,7 +19,7 @@ def ImagePreprocessing(img):
 	
 
 def MaskImage(img):
-	## rgb -> hsv
+	'''## rgb -> hsv
 	hsv_img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 	## rgb -> gray
 	gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -30,9 +30,25 @@ def MaskImage(img):
 	mask_yellow = cv2.inRange(hsv_img, lower_yellow, upper_yellow)
 	mask_white = cv2.inRange(gray_img, 200, 255)
 	mask_y_w = cv2.bitwise_or(mask_yellow, mask_white)
-	mask_y_w_img = cv2.bitwise_and(gray_img, mask_y_w)
+	
+	return mask_y_w'''
 
-	return mask_y_w_img
+	# August 2021 Update
+	# rgb -> hsv
+	hsv_img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+
+	lower_yellow = np.array([0,160,160], dtype="uint8")
+	upper_yellow = np.array([160,255,255], dtype="uint8")
+	lower_white = np.array([0,0,180], dtype="uint8")
+	upper_white = np.array([120,30,255], dtype="uint8")
+
+	mask_yellow = cv2.inRange(hsv_img, lower_yellow, upper_yellow)
+	mask_white = cv2.inRange(hsv_img, lower_white, upper_white)
+	mask_y_w = cv2.bitwise_or(mask_yellow, mask_white)
+
+	#return mask_yellow
+	#return mask_white
+	return mask_y_w
 
 
 def SetROI(img):
