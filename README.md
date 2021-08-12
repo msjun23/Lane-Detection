@@ -30,7 +30,7 @@ For better robust detection, applied ***CLAHE(Contrast Limited Adaptive Histogra
 2. Apply CLAHE to L channel image
 3. Remerge LAB channels and convert LAB to RGB again
 
-It returns more robust image about light.
+It returns more robust image about light. And code is [here](/utils/histogram.py).
 
 - Image example. These are, in order, origin image, yellow & white masking without CLAHE and masking with CLAHE.
 > ![yellow_white](/images/yellow_white.png)
@@ -39,4 +39,11 @@ It returns more robust image about light.
 >
 > ![mask_yellow_white_with_clahe](/saved/clahe_test/mask_yellow_white_with_clahe.png)
 >
+
+- Video frame example. Same order with upper images.
+> ![origin_frame](/saved/clahe_test/origin_frame.png)
+>
+> ![mask_yellow_white_without_clahe_frame](/saved/clahe_test/mask_yellow_white_without_clahe_frame.png)
+>
+> ![mask_yellow_white_with_clahe_frame](/saved/clahe_test/mask_yellow_white_with_clahe_frame.png)
 >
