@@ -33,8 +33,10 @@ For better robust detection, applied ***CLAHE(Contrast Limited Adaptive Histogra
 It returns more robust image about light.
 
 - Image example
-> ![yellow_white](/images/yellow_white.png)
+> ![yellow_white](/images/yellow_white.png "origin image")
 >
-> ![mask_yellow_white_without_clahe](/saved/clahe_test/mask_yellow_white_without_clahe.png) ![mask_yellow_white_with_clahe](/saved/clahe_test/mask_yellow_white_with_clahe.png)
+> ![mask_yellow_white_without_clahe](/saved/clahe_test/mask_yellow_white_without_clahe.png "Yellow & white masking image without CLAHE")
+>
+> ![mask_yellow_white_with_clahe](/saved/clahe_test/mask_yellow_white_with_clahe.png "Yellow & white masking image with CLAHE")
 >
 >
