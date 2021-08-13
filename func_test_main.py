@@ -15,7 +15,7 @@ hist.ColorImgCLAHE(img)'''
 if __name__ == "__main__":
     img = cv2.imread('images/yellow_white.png')
     clahe_img = hist.ColorImgCLAHE(img)
-    color_detected_img = ImagePreprocessing.MaskImage(img)
+    color_detected_img = ImagePreprocessing.MaskImage(clahe_img)
     
     cv2.imshow("color_detected_img", color_detected_img)
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
             
         ret, frame = cap.read()
         clahe_frame = hist.ColorImgCLAHE(frame)
-        color_detected_frame = ImagePreprocessing.MaskImage(frame)
+        color_detected_frame = ImagePreprocessing.MaskImage(clahe_frame)
 
         # Display frame
         '''curr_time = time.time()
